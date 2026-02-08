@@ -1,0 +1,7 @@
+Once upon a time, in a land far away, there lived a curious developer who wanted to understand how GPT models work.
+
+This developer embarked on a journey to learn about transformers, attention mechanisms, and the magic of deep learning.
+
+Through dedication and hands-on practice, they built their own GPT model from scratch and finally understood the principles behind large language models.
+
+The end.
