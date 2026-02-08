@@ -12,7 +12,6 @@ This isn't just another GPT implementation. It's a simple, practical introductio
 
 ## Who Is This For?
 
-- ML Engineers transitioning to NLP/LLMs
 - Software Developers learning deep learning
 - Students studying transformer architectures
 - Researchers needing a clean reference implementation
