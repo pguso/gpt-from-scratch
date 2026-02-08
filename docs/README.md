@@ -48,7 +48,18 @@ This documentation is organized for developers who want to understand the code a
 - Reading visualizations
 - Using the script
 
-### 6. [Quick Reference](QUICK_REFERENCE.md)
+### 6. [Loading Pretrained Weights](06-loading-pretrained-weights.md)
+**How to load and use pretrained model checkpoints**
+- Loading your own trained checkpoints
+- Loading OpenAI GPT-2 weights from Hugging Face
+- Understanding checkpoint structure
+- Step-by-step loading process
+- Weight conversion and mapping
+- Loading for inference vs. training
+- Common issues and solutions
+- Best practices
+
+### 7. [Quick Reference](QUICK_REFERENCE.md)
 **Quick access to commands and code snippets**
 - Common commands
 - Hyperparameter cheat sheet
@@ -60,22 +71,24 @@ This documentation is organized for developers who want to understand the code a
 1. **Want to use the model?** → Start with [Model Usage Guide](01-model-usage-guide.md)
 2. **Want to train a model?** → Read [Training Implementation](02-training-implementation.md)
 3. **Want to generate text?** → Jump to [Using the Model](03-using-the-model.md)
-4. **Running into issues?** → Check [Pitfalls and Challenges](04-pitfalls-and-challenges.md)
-5. **Want to visualize attention?** → See [Understanding Attention Analysis](05-understanding-attention-analysis.md)
+4. **Want to load a pretrained model?** → See [Loading Pretrained Weights](06-loading-pretrained-weights.md)
+5. **Running into issues?** → Check [Pitfalls and Challenges](04-pitfalls-and-challenges.md)
+6. **Want to visualize attention?** → See [Understanding Attention Analysis](05-understanding-attention-analysis.md)
 
 ## What This Documentation Covers
 
-✅ **Model usage** - How to create and use the model  
-✅ **Training pipeline** - What happens during training  
-✅ **Practical usage** - How to use the model  
-✅ **Common pitfalls** - Mistakes to avoid  
-✅ **Probabilistic challenges** - Working with non-deterministic models  
+**Model usage** - How to create and use the model  
+**Training pipeline** - What happens during training  
+**Practical usage** - How to use the model  
+**Loading checkpoints** - How to load pretrained weights  
+**Common pitfalls** - Mistakes to avoid  
+**Probabilistic challenges** - Working with non-deterministic models  
 
 ## What This Documentation Doesn't Cover
 
-❌ **Transformer theory** - How attention mechanisms work conceptually  
-❌ **Architecture explanations** - Why transformers were designed this way  
-❌ **Mathematical derivations** - The theory behind the algorithms  
+**Transformer theory** - How attention mechanisms work conceptually  
+**Architecture explanations** - Why transformers were designed this way  
+**Mathematical derivations** - The theory behind the algorithms  
 
 For those topics, there are excellent resources available:
 - "Attention Is All You Need" (original transformer paper)
