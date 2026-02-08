@@ -6,6 +6,7 @@ A comprehensive, educational implementation of GPT (Generative Pre-trained Trans
 
 This isn't just another GPT implementation. It's a simple, practical introduction that:
 
+- Top-down approach: Start with concepts, then dive into code
 - Easy to get started: Minimal setup, clear examples, straightforward code
 - Focused on essentials: Learn GPT fundamentals without unnecessary complexity
 
