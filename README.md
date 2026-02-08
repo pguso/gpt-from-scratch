@@ -4,12 +4,10 @@ A comprehensive, educational implementation of GPT (Generative Pre-trained Trans
 
 ## What Makes This Different?
 
-This isn't just another GPT implementation. It's a complete learning experience that:
+This isn't just another GPT implementation. It's a simple, practical introduction that:
 
-- Top-down approach: Start with concepts, then dive into code
-- Interactive notebooks: Visualize and experiment with every component
-- Comprehensive tests: 50+ tests that teach you how everything works
-- No hand-waving: Every line explained, every decision justified
+- Easy to get started: Minimal setup, clear examples, straightforward code
+- Focused on essentials: Learn GPT fundamentals without unnecessary complexity
 
 ## Who Is This For?
 
