@@ -19,7 +19,7 @@ if project_root not in sys.path:
     sys.path.insert(0, project_root)
 
 from src.model.gpt import GPTModel
-from src.config import GPTConfig
+from src.config import ModelConfig
 from src.data.dataset import GPTDataset
 from src.training.trainer import GPTTrainer
 from src.generation.generate import generate_text
@@ -172,7 +172,7 @@ def create_model(config):
     
     # Verify counting
     if total_params != trainable_params + non_trainable_params:
-        print(f"  ⚠️  Warning: Parameter count mismatch!")
+        print(f"  Warning: Parameter count mismatch!")
     
     return model
 
@@ -313,14 +313,14 @@ def train(
     
     # Create model (use adjusted context_length)
     print("\nCreating model...")
-    config = GPTConfig(
+    config = ModelConfig(
         vocab_size=vocab_size,
         context_length=context_length,  # May have been adjusted above
         embedding_dimension=embedding_dimension,
         number_of_heads=number_of_heads,
         number_of_layers=number_of_layers,
         dropout_rate=0.1,
-        query_key_value_bias=False
+        use_attention_bias=False
     )
     
     model = create_model(config)

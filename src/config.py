@@ -1,5 +1,5 @@
 """
-Configuration classes for GPT model.
+Configuration classes for model architecture.
 """
 
 from dataclasses import dataclass
@@ -7,8 +7,8 @@ from typing import Optional
 
 
 @dataclass
-class GPTConfig:
-    """Configuration for GPT model architecture."""
+class ModelConfig:
+    """Configuration for model architecture."""
     
     vocab_size: int = 50257
     context_length: int = 1024
@@ -16,7 +16,7 @@ class GPTConfig:
     number_of_heads: int = 12
     number_of_layers: int = 12
     dropout_rate: float = 0.1
-    query_key_value_bias: bool = False
+    use_attention_bias: bool = False
     
     def __post_init__(self):
         """Validate configuration parameters."""
@@ -32,5 +32,5 @@ class GPTConfig:
             "number_of_heads": self.number_of_heads,
             "number_of_layers": self.number_of_layers,
             "dropout_rate": self.dropout_rate,
-            "query_key_value_bias": self.query_key_value_bias
+            "use_attention_bias": self.use_attention_bias
         }

@@ -15,7 +15,7 @@ if project_root not in sys.path:
     sys.path.insert(0, project_root)
 
 from src.model.gpt import GPTModel
-from src.config import GPTConfig
+from src.config import ModelConfig
 from src.generation.generate import generate_text
 import tiktoken
 
@@ -59,11 +59,19 @@ def main():
     
     # Recreate config from checkpoint
     if 'config' in checkpoint:
-        config = GPTConfig(**checkpoint['config'])
+        checkpoint_config = checkpoint['config']
+        
+        # Handle backward compatibility: old checkpoints may have 'query_key_value_bias'
+        # instead of 'use_attention_bias'
+        if 'use_attention_bias' not in checkpoint_config and 'query_key_value_bias' in checkpoint_config:
+            checkpoint_config['use_attention_bias'] = checkpoint_config.pop('query_key_value_bias')
+            print("Note: Converted old parameter name 'query_key_value_bias' to 'use_attention_bias'")
+        
+        config = ModelConfig(**checkpoint_config)
     else:
         # Fallback to default config if not in checkpoint
         print("Warning: Config not found in checkpoint, using defaults")
-        config = GPTConfig()
+        config = ModelConfig()
     
     # Create model
     print("Creating model...")

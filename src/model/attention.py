@@ -19,7 +19,7 @@ class MultiHeadAttention(nn.Module):
         context_length: int,
         dropout: float,
         number_of_heads: int,
-        query_key_value_bias: bool = False
+        use_attention_bias: bool = False
     ):
         super().__init__()
         assert output_dimension % number_of_heads == 0, "output_dimension must be divisible by number_of_heads"
@@ -29,9 +29,9 @@ class MultiHeadAttention(nn.Module):
         self.head_dimension = output_dimension // number_of_heads
         
         # Query, Key, Value projections
-        self.W_query = nn.Linear(input_dimension, output_dimension, bias=query_key_value_bias)
-        self.W_key = nn.Linear(input_dimension, output_dimension, bias=query_key_value_bias)
-        self.W_value = nn.Linear(input_dimension, output_dimension, bias=query_key_value_bias)
+        self.W_query = nn.Linear(input_dimension, output_dimension, bias=use_attention_bias)
+        self.W_key = nn.Linear(input_dimension, output_dimension, bias=use_attention_bias)
+        self.W_value = nn.Linear(input_dimension, output_dimension, bias=use_attention_bias)
         
         # Output projection
         self.out_proj = nn.Linear(output_dimension, output_dimension)

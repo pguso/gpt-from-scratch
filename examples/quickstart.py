@@ -11,14 +11,14 @@ if project_root not in sys.path:
     sys.path.insert(0, project_root)
 
 from src.model.gpt import GPTModel
-from src.config import GPTConfig
+from src.config import ModelConfig
 from src.generation.generate import generate_text
 import tiktoken
 
 
 def main():
     # Create a small model
-    config = GPTConfig(
+    config = ModelConfig(
         vocab_size=50257,
         embedding_dimension=256,
         number_of_heads=4,

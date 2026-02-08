@@ -5,6 +5,7 @@ Quick access to common commands, hyperparameters, and code snippets for GPT From
 ## Table of Contents
 
 - [Common Commands](#common-commands)
+- [Training Script Parameters](#training-script-parameters)
 - [Hyperparameter Cheat Sheet](#hyperparameter-cheat-sheet)
 - [Model Configuration Examples](#model-configuration-examples)
 - [Code Snippets](#code-snippets)
@@ -95,26 +96,56 @@ python examples/generate_text.py \
     --top-k 10
 ```
 
-### Attention Analysis
+### Attention Analysis (Optional)
 
 ```bash
-# Analyze attention patterns
+# Analyze attention patterns (if analyze_attention.py exists)
 python examples/analyze_attention.py \
     --checkpoint checkpoints/best_model.pt \
     --text "The cat sat on the mat. It was fluffy."
+```
 
-# Visualize specific layer and head
-python examples/analyze_attention.py \
-    --checkpoint checkpoints/best_model.pt \
-    --text "Once upon a time" \
-    --layer 2 \
-    --head 0 \
-    --show-plots
+## Training Script Parameters
 
-# Analyze all layers
-python examples/analyze_attention.py \
-    --checkpoint checkpoints/best_model.pt \
-    --text "The little girl walked to the park"
+Complete reference for `train_tiny_stories.py` command-line arguments:
+
+| Argument | Type | Default | Description |
+|----------|------|---------|-------------|
+| **Data Arguments** |
+| `--data-path` | str | None | Path to data file (None to download from Hugging Face) |
+| `--max-samples` | int | 10000 | Maximum number of samples to use from dataset |
+| **Training Arguments** |
+| `--epochs` | int | 10 | Number of training epochs |
+| `--batch-size` | int | 32 | Batch size (adjust for memory) |
+| `--learning-rate` | float | 3e-4 | Learning rate for AdamW optimizer |
+| **Model Arguments** |
+| `--context-length` | int | 128 | Maximum sequence length |
+| `--embedding-dimension` | int | 256 | Size of token embeddings |
+| `--number-of-heads` | int | 4 | Number of attention heads (must divide embedding-dimension) |
+| `--number-of-layers` | int | 4 | Number of transformer layers |
+| **Other Arguments** |
+| `--device` | str | "cuda" | Device to train on: "cuda", "cpu", or "mps" |
+| `--save-dir` | str | "checkpoints" | Directory to save checkpoints |
+| `--save-every` | int | 5 | Save checkpoint every N epochs |
+| `--eval-every` | int | 1 | Run validation every N epochs |
+| `--generate-every` | int | 2 | Generate sample text every N epochs |
+
+**Example usage:**
+```bash
+python examples/train_tiny_stories.py \
+    --epochs 20 \
+    --max-samples 50000 \
+    --embedding-dimension 512 \
+    --number-of-layers 6 \
+    --number-of-heads 8 \
+    --batch-size 64 \
+    --learning-rate 3e-4 \
+    --context-length 256 \
+    --device cuda \
+    --save-dir checkpoints \
+    --save-every 5 \
+    --eval-every 1 \
+    --generate-every 2
 ```
 
 ## Hyperparameter Cheat Sheet
@@ -163,16 +194,16 @@ python examples/analyze_attention.py \
 ### Tiny Model (Fast, for Learning)
 
 ```python
-from src.config import GPTConfig
+from src.config import ModelConfig
 
-config = GPTConfig(
+config = ModelConfig(
     vocab_size=50257,
     context_length=128,
     embedding_dimension=128,
     number_of_heads=2,
     number_of_layers=2,
     dropout_rate=0.1,
-    query_key_value_bias=False
+    use_attention_bias=False
 )
 # ~1M parameters
 ```
@@ -180,14 +211,14 @@ config = GPTConfig(
 ### Small Model (Good Balance)
 
 ```python
-config = GPTConfig(
+config = ModelConfig(
     vocab_size=50257,
     context_length=256,
     embedding_dimension=256,
     number_of_heads=4,
     number_of_layers=4,
     dropout_rate=0.1,
-    query_key_value_bias=False
+    use_attention_bias=False
 )
 # ~4M parameters
 ```
@@ -195,14 +226,14 @@ config = GPTConfig(
 ### Medium Model (Better Quality)
 
 ```python
-config = GPTConfig(
+config = ModelConfig(
     vocab_size=50257,
     context_length=512,
     embedding_dimension=512,
     number_of_heads=8,
     number_of_layers=6,
     dropout_rate=0.1,
-    query_key_value_bias=False
+    use_attention_bias=False
 )
 # ~30M parameters
 ```
@@ -210,14 +241,14 @@ config = GPTConfig(
 ### GPT-2 Small Equivalent
 
 ```python
-config = GPTConfig(
+config = ModelConfig(
     vocab_size=50257,
     context_length=1024,
     embedding_dimension=768,
     number_of_heads=12,
     number_of_layers=12,
     dropout_rate=0.1,
-    query_key_value_bias=False
+    use_attention_bias=False
 )
 # ~117M parameters
 ```
@@ -228,11 +259,11 @@ config = GPTConfig(
 
 ```python
 from src.model.gpt import GPTModel
-from src.config import GPTConfig
+from src.config import ModelConfig
 import torch
 
 # Create config
-config = GPTConfig(
+config = ModelConfig(
     vocab_size=50257,
     context_length=128,
     embedding_dimension=256,
@@ -254,13 +285,13 @@ logits = model(input_ids)  # Shape: [1, 10, 50257]
 ```python
 import torch
 from src.model.gpt import GPTModel
-from src.config import GPTConfig
+from src.config import ModelConfig
 
 # Load checkpoint
 checkpoint = torch.load('checkpoints/best_model.pt', map_location='cpu')
 
 # Recreate config
-config = GPTConfig(**checkpoint['config'])
+config = ModelConfig(**checkpoint['config'])
 
 # Create and load model
 model = GPTModel(config)
@@ -394,7 +425,8 @@ print(f"Model size: {total * 4 / 1024 / 1024:.2f} MB (FP32)")
 ## Additional Resources
 
 - **Full Documentation:** See [Documentation Index](README.md)
-- **Training Concepts:** See [Training Pipeline](04-training-pipeline.md)
-- **Training Implementation:** See [Training Walkthrough](04-training-walkthrough.md)
-- **Advanced Techniques:** See [Advanced Topics](05-advanced-topics.md)
+- **Model Implementation:** See [Model Implementation](01-model-usage-guide.md)
+- **Training Details:** See [Training Implementation](02-training-implementation.md)
+- **Using the Model:** See [Using the Model](03-using-the-model.md)
+- **Pitfalls and Challenges:** See [Pitfalls and Challenges](04-pitfalls-and-challenges.md)
 - **Main README:** See [README.md](../README.md) for installation and overview

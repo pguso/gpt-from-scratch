@@ -21,7 +21,7 @@ if project_root not in sys.path:
     sys.path.insert(0, project_root)
 
 from src.model.gpt import GPTModel
-from src.config import GPTConfig
+from src.config import ModelConfig
 
 
 class AttentionHook:
@@ -364,20 +364,20 @@ def main():
             if checkpoint_vocab_size != vocab_size:
                 print(f"  Warning: Checkpoint vocab_size ({checkpoint_vocab_size}) differs from tokenizer vocab_size ({vocab_size})")
                 print(f"  Using checkpoint vocab_size: {checkpoint_vocab_size}")
-            config = GPTConfig(
+            config = ModelConfig(
                 vocab_size=checkpoint_vocab_size,
                 context_length=checkpoint_config.get('context_length', args.context_length),
                 embedding_dimension=checkpoint_config.get('embedding_dimension', args.embedding_dimension),
                 number_of_heads=checkpoint_config.get('number_of_heads', args.number_of_heads),
                 number_of_layers=checkpoint_config.get('number_of_layers', args.number_of_layers),
                 dropout_rate=0.0,  # Disable dropout for analysis
-                query_key_value_bias=checkpoint_config.get('query_key_value_bias', False)
+                use_attention_bias=checkpoint_config.get('use_attention_bias', checkpoint_config.get('query_key_value_bias', False))
             )
             print(f"  Config from checkpoint: d_model={config.embedding_dimension}, "
                   f"n_layers={config.number_of_layers}, n_heads={config.number_of_heads}")
         else:
             print("No config found in checkpoint, using command-line arguments...")
-            config = GPTConfig(
+            config = ModelConfig(
                 vocab_size=vocab_size,
                 context_length=args.context_length,
                 embedding_dimension=args.embedding_dimension,
@@ -388,7 +388,7 @@ def main():
     else:
         # Create model with command-line arguments
         print("\nCreating model...")
-        config = GPTConfig(
+        config = ModelConfig(
             vocab_size=vocab_size,
             context_length=args.context_length,
             embedding_dimension=args.embedding_dimension,

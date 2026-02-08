@@ -88,6 +88,8 @@ python examples/train_tiny_stories.py --epochs 20 --max-samples 50000 --embeddin
 - `checkpoints/best_model.pt` - Best model based on validation loss
 - `checkpoints/checkpoint_epoch_N.pt` - Periodic checkpoints
 
+**All available parameters:** See the [Training Script Parameters table](docs/QUICK_REFERENCE.md#training-script-parameters) in the Quick Reference for a complete list of command-line arguments you can pass to `train_tiny_stories.py`.
+
 ### Step 3: Generate Text with Trained Model
 
 Once you have a trained checkpoint, generate text:
@@ -198,23 +200,18 @@ python examples/analyze_attention.py \
 **Quick access:**
 - [Quick Reference](docs/QUICK_REFERENCE.md) - Common commands, hyperparameters, and code snippets
 
-**Learning path (read in order):**
-- [Overview](docs/00-overview.md) - What is GPT and why transformers matter
-- [Transformer Architecture](docs/01-transformer-architecture.md) - Detailed architecture breakdown
-- [Attention Mechanism](docs/02-attention-mechanism.md) - Deep dive into how attention works
-- [Building Blocks](docs/03-building-blocks.md) - Layer-by-layer construction guide
-- [Training Pipeline](docs/04-training-pipeline.md) - General training concepts and fundamentals
-- [Training Walkthrough](docs/04-training-walkthrough.md) - Complete training script walkthrough
-- [Advanced Topics](docs/05-advanced-topics.md) - Optimizations, fine-tuning, and extensions
+**Documentation structure:**
+- [Model Usage Guide](docs/01-model-usage-guide.md) - How to use the model (inputs, outputs, configuration)
+- [Training Implementation](docs/02-training-implementation.md) - How training works
+- [Using the Model](docs/03-using-the-model.md) - How to use the trained model
+- [Pitfalls and Challenges](docs/04-pitfalls-and-challenges.md) - Common mistakes and probabilistic challenges
 
 ## Repository Structure
 
 ```
 gpt-from-scratch/
 ├── docs/              # Comprehensive documentation
-├── notebooks/         # Interactive Jupyter tutorials
 ├── src/              # Clean source code
-├── tests/            # Educational tests that teach concepts
 ├── examples/         # Practical usage examples
 └── data/             # Sample datasets
 ```
